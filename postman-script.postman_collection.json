@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "a77e04f0-0c42-4d95-9125-38946b985741",
+		"name": "postman-script",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Request1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let id = pm.environment.get(\"id\");\r",
+							"pm.environment.set(\"id\", parseInt(id) + 1);\r",
+							"\r",
+							"let programs = [\"IT\", \"Economy\", \"Finance\", \"Environment\"];\r",
+							"let programme = _.sample(programs);\r",
+							"pm.environment.set(\"programme\", programme);\r",
+							"\r",
+							"let courseList = [\"Java\", \"Javascript\", \"PHP\", \"Python\", \"C++\"];\r",
+							"let courses = _.sample(courseList, _.random(1,3));\r",
+							"pm.environment.set(\"courses\", JSON.stringify(courses));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{id}},\r\n    \"fisrtName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"programme\": \"{{programme}}\",\r\n    \"courses\": {{courses}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://postman-echo.com/post",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"direction\": {{direction}},\r\n    \"depinput\": \"{{depinput}}\",\r\n    \"desinput\": \"{{desinput}}\",\r\n    \"depdate\": \"{{depdate}}\",\r\n    \"desdate\": \"{{desdate}}\",\r\n    \"adult\": {{adult}},\r\n    \"child\": {{child}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://postman-echo.com/post",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const expect = require(\"chai\").expect;\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"let titles = _.map(res.data.store.book, _.property(\"title\"));\r",
+							"\r",
+							"pm.test(\"Check every titles\", () => {\r",
+							"    let testEvery = titles.every((element) => element === \"The Lord of the Rings\");\r",
+							"    expect(testEvery).true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check any titles\", () => {\r",
+							"    let testAny = titles.includes(\"The Lord of the Rings\");\r",
+							"    expect(testAny).true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check every titles - 2\", () => {\r",
+							"    titles.forEach((title) => {\r",
+							"        expect(title).eql(\"The Lord of the Rings\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check any titles - 2\", () => {\r",
+							"    expect(titles).include(\"The Lord of the Rings\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"store\": {\r\n        \"book\": [\r\n            {\r\n                \"category\": \"reference\",\r\n                \"author\": \"Nigel Rees\",\r\n                \"title\": \"Sayings of the Century\",\r\n                \"price\": 8.95\r\n            },\r\n            {\r\n                \"category\": \"fiction\",\r\n                \"author\": \"Evelyn Waugh\",\r\n                \"title\": \"Sword of Honour\",\r\n                \"price\": 12.99\r\n            },\r\n            {\r\n                \"category\": \"fiction\",\r\n                \"author\": \"Herman Melville\",\r\n                \"title\": \"Moby Dick\",\r\n                \"isbn\": \"0-553-21311-3\",\r\n                \"price\": 8.99\r\n            },\r\n            {\r\n                \"category\": \"fiction\",\r\n                \"author\": \"J. R. R. Tolkien\",\r\n                \"title\": \"The Lord of the Rings\",\r\n                \"isbn\": \"0-395-19395-8\",\r\n                \"price\": 22.99\r\n            }\r\n        ],\r\n        \"bicycle\": {\r\n            \"color\": \"red\",\r\n            \"price\": 19.95\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://postman-echo.com/post",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "name",
+			"value": ""
+		}
+	]
+}
